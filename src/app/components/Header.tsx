@@ -1,5 +1,6 @@
 'use client'
 import styled from 'styled-components';
+import Link from 'next/link';
 
 const Container = styled.header`
   width: 100%;
@@ -14,7 +15,9 @@ const Container = styled.header`
   align-items: center;
 `;
 
-const HeaderLeft = styled.div`
+const HeaderLeft = styled(Link)`
+  text-decoration: none;
+  color: white;
   margin-left: 20px;
 `;
 
@@ -24,15 +27,28 @@ const HeaderRight = styled.div`
   margin-right: 60px;
 `;
 
+const StyledLink = styled(Link)`
+  color: white;
+  font-size: 1rem;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #663366;
+    border-radius: 5px;
+    padding: 5px;
+  }
+`;
+
 
 export default function Header() {
   return (
     <>
       <Container>
-        <HeaderLeft>About</HeaderLeft>
+        <HeaderLeft href="/">Home</HeaderLeft>
         <HeaderRight>
-          <div>Likes</div>
-          <div>SNS</div>
+          <StyledLink href="/about">About</StyledLink>
+          <StyledLink href="/diagnosis">Likes</StyledLink>
+          <StyledLink href="/diagnosis">SNS</StyledLink>
         </HeaderRight>
       </Container>
     </>
