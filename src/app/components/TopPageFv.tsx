@@ -1,6 +1,42 @@
 'use client'
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Link from 'next/link';
+
+const waveAnimation1 = keyframes`
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(15px);
+  }
+  100% {
+    transform: translateX(-100%) translateY(0);
+  }
+`;
+
+const waveAnimation2 = keyframes`
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-15px);
+  }
+  100% {
+    transform: translateX(-100%) translateY(0);
+  }
+`;
+
+const hexagonAnimation = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
 
 const PageContainer = styled.div<{ background?: string }>`
   display: flex;
@@ -9,8 +45,33 @@ const PageContainer = styled.div<{ background?: string }>`
   height: 100vh;
   color: white;
   background: ${({ background }) => background || 'black'};
+  opacity: 0.9;
   position: relative;
   overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: url('/wave.svg') repeat-x;
+    animation: ${waveAnimation1} 30s linear infinite;
+    opacity: 0.5;
+    z-index: -2;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: url('/wave2.svg') repeat-x;
+    animation: ${waveAnimation2} 15s linear infinite;
+    opacity: 0.8;
+    z-index: -1;
+  }
 `;
 
 const Container = styled.div`
@@ -34,7 +95,7 @@ const Background = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: -3;
   overflow: hidden;
 `;
 
@@ -48,6 +109,54 @@ const Oval = styled.div<{ width?: string; height?: string; top?: string; left?: 
   top: ${({ top }) => top || '50%'};
   left: ${({ left }) => left || '50%'};
   transform: translate(-50%, -50%);
+`;
+
+const Hexagon = styled.div`
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.1);
+  clip-path: polygon(
+    25% 6.7%, 
+    75% 6.7%, 
+    100% 50%, 
+    75% 93.3%, 
+    25% 93.3%, 
+    0% 50%
+  );
+  animation: ${hexagonAnimation} 4s ease-in-out infinite;
+  z-index: -4;
+
+  &:nth-child(1) {
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+  }
+  &:nth-child(2) {
+    top: 30%;
+    left: 40%;
+    animation-delay: 1s;
+  }
+  &:nth-child(3) {
+    top: 50%;
+    left: 60%;
+    animation-delay: 2s;
+  }
+  &:nth-child(4) {
+    top: 70%;
+    left: 80%;
+    animation-delay: 3s;
+  }
+  &:nth-child(5) {
+    top: 80%;
+    left: 20%;
+    animation-delay: 3s;
+  }
+  &:nth-child(6) {
+    top: 80%;
+    left: 60%;
+    animation-delay: 3s;
+  }
 `;
 
 const Title = styled.h1`
@@ -77,7 +186,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   margin-top: 1rem;
   display: inline-block;
-  z-index: 2;
+  z-index: 10;
 
   &:hover {
     background-color: #009977;
@@ -88,6 +197,12 @@ export default function TopPageFv() {
   return (
     <>
       <PageContainer>
+        <Hexagon />
+        <Hexagon />
+        <Hexagon />
+        <Hexagon />
+        <Hexagon />
+        <Hexagon />
         <Container>
           <Background>
             <Oval width="300px" height="150px" top="40%" left="30%" color="blue"/>
