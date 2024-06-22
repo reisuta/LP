@@ -17,8 +17,8 @@ const HeaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background: white;
-  color: black;
+  background: black;
+  color: blue;
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
@@ -30,14 +30,14 @@ const MainContent = styled.div`
   justify-content: space-around;
   padding: 2rem;
   width: 100%;
-  background: #fdf1f1;
+  background: #330033;
 `;
 
 const Subtitle = styled.h2`
   font-size: 1.5rem;
   font-weight: 200;
   margin: 0.5rem 0;
-  color: white;
+  color: gray;
 `;
 
 const Card = styled.div`
@@ -72,7 +72,7 @@ const FormSection = styled.div`
   justify-content: center;
   align-items: center;
   padding: 4rem;
-  background: #336666;
+  background: #660033;
   color: white;
   width: 100%;
   text-align: center;
@@ -109,12 +109,13 @@ const FooterSection = styled.div`
 const FooterTitle = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  color: gray;
 `;
 
 const FooterText = styled.p`
   font-size: 1rem;
   margin: 0;
-  color: #ccc;
+  color: gray;
 `;
 
 const FooterButton = styled(Button)`
