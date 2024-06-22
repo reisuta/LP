@@ -212,7 +212,6 @@ export default function TopPageFv() {
           <Title>reisuta</Title>
           <Subtitle>フルスタックLinuxプログラミング</Subtitle>
           <StyledLink href="/diagnosis">文豪性格診断</StyledLink>
-          <Link href="/diagnosis">test</Link>
         </Container>
 
         <VerticalContainer>

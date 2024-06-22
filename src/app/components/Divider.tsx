@@ -1,32 +1,54 @@
 'use client'
 import styled from 'styled-components';
 
-const Element = styled.div`
+const DividerContainer = styled.div`
   width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
+  height: 50px;
+  position: relative;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: black;
+`;
 
-  svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 120px;
-  }
+const Line = styled.div`
+  width: 100%;
+  height: 4px;
+  background-color: darkred;
+  position: absolute;
+  opacity: 0.5;
+  top: ${({ top }) => top};
+`;
 
-  .shape-fill {
-    fill: gray;
-  }
+const Triangle = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid darkred;
+  position: absolute;
+  top: 24px;
+  opacity: 0.6;
+  left: calc(50% - 100px);
+`;
+
+const Square = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: darkred;
+  position: absolute;
+  opacity: 0.6;
+  top: 12px;
+  left: calc(50% + 100px);
 `;
 
 export default function Divider() {
   return (
-    <>
-      <Element>
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
-        </svg>
-      </Element>
-    </>
-  )
+    <DividerContainer>
+      <Line top="0" />
+      <Line top="22px" />
+      <Line top="44px" />
+      <Triangle />
+      <Square />
+    </DividerContainer>
+  );
 }
