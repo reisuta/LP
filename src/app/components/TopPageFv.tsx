@@ -9,7 +9,6 @@ const PageContainer = styled.div<{ background?: string }>`
   height: 100vh;
   color: white;
   background: ${({ background }) => background || 'black'};
-  z-index: -1;
   position: relative;
   overflow: hidden;
 `;
@@ -23,6 +22,7 @@ const Container = styled.div`
   width: 50%;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 `;
 
 const VerticalContainer = styled(Container)`
@@ -34,7 +34,7 @@ const Background = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: -1;
   overflow: hidden;
 `;
 
@@ -77,6 +77,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   margin-top: 1rem;
   display: inline-block;
+  z-index: 2;
 
   &:hover {
     background-color: #009977;
@@ -96,6 +97,7 @@ export default function TopPageFv() {
           <Title>reisuta</Title>
           <Subtitle>フルスタックLinuxプログラミング</Subtitle>
           <StyledLink href="/diagnosis">文豪性格診断</StyledLink>
+          <Link href="/diagnosis">test</Link>
         </Container>
 
         <VerticalContainer>
@@ -109,7 +111,6 @@ export default function TopPageFv() {
           <Subtitle>芥川龍之介</Subtitle>
         </VerticalContainer>
       </PageContainer>
-
     </>
-  )
+  );
 }
