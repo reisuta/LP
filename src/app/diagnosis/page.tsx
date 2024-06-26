@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import QuestionForm from '../components/QuestionForm';
 
 const PageContainer = styled.div`
   display: flex;
@@ -34,46 +35,15 @@ const Title = styled.h1`
   font-weight: bold;
 `;
 
-const Content = styled.p`
-  margin: 0;
-  font-size: 1rem;
-  color: white;
-`;
-
 const QuestionSection = styled.div`
   width: 100%;
   max-width: 800px;
   margin-bottom: 2rem;
 `;
 
-const QuestionTitle = styled.h2`
-  font-size: 1.25rem;
-  color: #00cc99;
-  margin-bottom: 1rem;
-`;
-
-const OptionList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-`;
-
-const OptionItem = styled.label`
-  display: flex;
-  align-items: center;
-  background: #3333cc;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-
-  input {
-    margin-right: 0.5rem;
-  }
-`;
-
 export default function DiagnosticTest() {
   const [diagnosisTitle, setDiagnosisTitle] = useState('');
+  const [headers, setHeaders] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
 
@@ -83,7 +53,8 @@ export default function DiagnosticTest() {
         const response = await fetch('http://localhost:8086/diagnosis/1'); // IDは1を仮定
         const data = await response.json();
         setDiagnosisTitle(data.title);
-        setQuestions(data.questions);
+        setHeaders(data.headers);
+        // setQuestions(data.questions);
       } catch (error) {
         console.error('Error fetching questions:', error);
       }
@@ -130,22 +101,10 @@ export default function DiagnosticTest() {
       <Header />
       <PageContainer>
         <Title>{diagnosisTitle}</Title>
-        {questions.map((question, index) => (
+        {headers.map((questions, index) => (
           <QuestionSection key={index}>
-            <QuestionTitle>{question.title}</QuestionTitle>
-            <OptionList>
-              {question.choices.map((choice, idx) => (
-                <OptionItem key={idx}>
-                  <input
-                    type={question.type}
-                    name={`question-${index}`}
-                    value={choice.point}
-                    onChange={() => handleChange(index, choice.point, question.id, choice.title)}
-                  />
-                  <Content>{choice.title}</Content>
-                </OptionItem>
-              ))}
-            </OptionList>
+            <QuestionForm
+              questions={questions} />
           </QuestionSection>
         ))}
         <Button onClick={handleSubmit}>保存</Button>
