@@ -45,7 +45,6 @@ export default function DiagnosticTest() {
   const [diagnosisTitle, setDiagnosisTitle] = useState('');
   const [headers, setHeaders] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState({});
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -63,51 +62,17 @@ export default function DiagnosticTest() {
     fetchQuestions();
   }, []);
 
-  const handleChange = (questionIndex, choicePoint, questionId, questionTitle) => {
-    setAnswers(prevAnswers => ({
-      ...prevAnswers,
-      [questionIndex]: { point: choicePoint, question_id: questionId, title: questionTitle }
-    }));
-  };
-
-  const handleSubmit = async () => {
-    try {
-      for (const key in answers) {
-        const answer = answers[key];
-        const response = await fetch('http://localhost:8086/diagnosis_answer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            title: answer.title,
-            point: answer.point,
-            question_id: answer.question_id
-          }),
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const responseData = await response.json();
-        console.log('Successfully submitted:', responseData);
-      }
-    } catch (error) {
-      console.error('Error submitting answers:', error);
-    }
-  };
-
+  console.log(headers)
   return (
     <>
       <Header />
       <PageContainer>
         <Title>{diagnosisTitle}</Title>
-        {headers.map((questions, index) => (
-          <QuestionSection key={index}>
-            <QuestionForm
-              questions={questions} />
-          </QuestionSection>
-        ))}
-        <Button onClick={handleSubmit}>保存</Button>
+        {headers.length > 0 ? (
+          <QuestionForm headers={headers} />
+        ) : (
+          <p>Loading...</p>
+        )}
       </PageContainer>
     </>
   );
