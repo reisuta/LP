@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import { useRouter } from 'next/navigation'
 
 const Button = styled.button<{ color?: string }>`
   background-color: ${({ color }) => color || 'black' };
@@ -82,6 +83,7 @@ export default function QuestionForm({ headers }) {
   const [currentHeaderIndex, setCurrentHeaderIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [errors, setErrors] = useState({});
+  const router = useRouter();
 
   const handlePrev = () => {
     if (currentHeaderIndex > 0) {
@@ -120,6 +122,7 @@ export default function QuestionForm({ headers }) {
           const responseData = await response.json();
           console.log('Successfully submitted:', responseData);
         }
+        router.push('/diagnosis/finish')
       } catch (error) {
         console.error('Error submitting answers:', error);
       }
