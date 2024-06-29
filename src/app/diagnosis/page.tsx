@@ -62,7 +62,6 @@ export default function DiagnosticTest() {
     fetchQuestions();
   }, []);
 
-  console.log(headers)
   return (
     <>
       <Header />

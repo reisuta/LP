@@ -1,12 +1,13 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
+import Header from '../components/Header';
 
-const Button = styled.button`
-  background-color: #000;
+const Button = styled.button<{ color?: string }>`
+  background-color: ${({ color }) => color || 'black' };
   color: white;
   padding: 15px 30px;
+  margin: 20px;
   font-size: 1rem;
   border: none;
   border-radius: 5px;
@@ -19,6 +20,14 @@ const Button = styled.button`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 1rem;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -29,7 +38,6 @@ const Container = styled.div`
   padding: 2rem;
   margin-top: 20px;
 `;
-
 
 const Title = styled.h1`
   font-size: 2rem;
@@ -47,7 +55,6 @@ const OptionList = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
 `;
-
 
 const OptionItem = styled.label`
   display: flex;
@@ -71,81 +78,114 @@ const Content = styled.p`
   color: white;
 `;
 
-
-
-export default function QuestionForm(headers) {
+export default function QuestionForm({ headers }) {
   const [currentHeaderIndex, setCurrentHeaderIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [errors, setErrors] = useState({});
+
+  const handlePrev = () => {
+    if (currentHeaderIndex > 0) {
+      setCurrentHeaderIndex(currentHeaderIndex - 1);
+    }
+  };
+
   const handleNext = () => {
-    if (currentHeaderIndex < headers.headers.length - 1) {
-      setCurrentHeaderIndex(currentHeaderIndex + 1);
+    if (validateCurrentSection()) {
+      if (currentHeaderIndex < headers.length - 1) {
+        setCurrentHeaderIndex(currentHeaderIndex + 1);
+        setErrors({});
+      }
     }
   };
 
   const handleSubmit = async () => {
-    try {
-      for (const key in answers) {
-        const answer = answers[key];
-        const response = await fetch('http://localhost:8086/diagnosis_answer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            title: answer.title,
-            point: answer.point,
-            question_id: answer.question_id
-          }),
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+    if (validateCurrentSection()) {
+      try {
+        for (const key in answers) {
+          const answer = answers[key];
+          const response = await fetch('http://localhost:8086/diagnosis_answer', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              title: answer.title,
+              point: answer.point,
+              question_id: answer.question_id
+            }),
+          });
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const responseData = await response.json();
+          console.log('Successfully submitted:', responseData);
         }
-        const responseData = await response.json();
-        console.log('Successfully submitted:', responseData);
+      } catch (error) {
+        console.error('Error submitting answers:', error);
       }
-    } catch (error) {
-      console.error('Error submitting answers:', error);
     }
   };
 
-  const currentHeader = headers.headers[currentHeaderIndex];
-
-  const [answers, setAnswers] = useState({});
-  const handleChange = (questionIndex, choicePoint, questionId, choiceTitle) => {
+  const handleChange = (questionId, choicePoint, choiceTitle, choiceId) => {
     setAnswers(prevAnswers => ({
       ...prevAnswers,
-      [questionIndex]: { point: choicePoint, question_id: questionId, title: choiceTitle }
+      [questionId]: { point: choicePoint, question_id: questionId, title: choiceTitle, choice_id: choiceId }
     }));
   };
-  console.log(headers.headers)
+
+  const validateCurrentSection = () => {
+    const currentHeader = headers[currentHeaderIndex];
+    let isValid = true;
+    let newErrors = {};
+    console.log(answers)
+    console.log(currentHeader.questions)
+
+    currentHeader.questions.forEach((question) => {
+      if (!answers.hasOwnProperty(question.id)) {
+        newErrors[question.id] = 'この質問は必須です。';
+        isValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const currentHeader = headers[currentHeaderIndex];
 
   return (
     <>
-        <Title>{currentHeader.title}</Title>
+      <Header />
       <Container>
+        <Title>{currentHeader.title}</Title>
         <OptionList>
-          {currentHeader.questions.map((question, index) => (
-            <div key={index}>
-
-              <Title>{question.title}</Title>
-              {question.choices.map((choice, idx) => (
-                <OptionItem key={idx}>
+          {currentHeader.questions.map((question) => (
+            <div key={question.id}>
+              <QuestionTitle>{question.title}</QuestionTitle>
+              {question.choices.map((choice) => (
+                <OptionItem key={choice.title}>
                   <input
                     type={question.type}
                     name={`question-${question.id}`}
                     value={choice.point}
-                    onChange={() => handleChange(index, choice.point, question.id, choice.title)}
+                    checked={answers[question.id]?.choice_id === choice.id}
+                    onChange={() => handleChange(question.id, choice.point, choice.title, choice.id)}
                   />
                   <Content>{choice.title}</Content>
                 </OptionItem>
               ))}
+              {errors[question.id] && <Content style={{ color: 'red' }}>{errors[question.id]}</Content>}
             </div>
           ))}
         </OptionList>
-        {currentHeaderIndex < headers.headers.length - 1 ? (
-          <Button onClick={handleNext}>次へ</Button>
-        ) : (
-          <Button onClick={handleSubmit}>保存</Button>
-        )}
+        <ButtonContainer>
+          {currentHeaderIndex > 0 && <Button color="green" onClick={handlePrev}>前へ</Button>}
+          {currentHeaderIndex < headers.length - 1 ? (
+            <Button color="blue" onClick={handleNext}>次へ</Button>
+          ) : (
+            <Button color="red" onClick={handleSubmit}>保存</Button>
+          )}
+        </ButtonContainer>
       </Container>
     </>
   );
