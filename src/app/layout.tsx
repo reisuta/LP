@@ -1,7 +1,7 @@
 'use client'
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import StyledComponentsRegistry from './lib/registry'
-import type { ReactNode } from 'react';
+import type { ReactNode } from 'react'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -10,13 +10,13 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   }
-`;
+`
 
 const theme = {
   colors: {
     primary: '#0070f3',
   },
-};
+}
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -24,11 +24,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <StyledComponentsRegistry>
           <GlobalStyle />
-          <ThemeProvider theme={theme}>
-            {children}
-          </ThemeProvider>
+          <ThemeProvider theme={theme}>{children}</ThemeProvider>
         </StyledComponentsRegistry>
       </body>
     </html>
-  );
+  )
 }

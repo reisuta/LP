@@ -1,6 +1,6 @@
 'use client'
-import styled, { keyframes } from 'styled-components';
-import Link from 'next/link';
+import styled, { keyframes } from 'styled-components'
+import Link from 'next/link'
 
 const Background = styled.div`
   position: absolute;
@@ -8,8 +8,7 @@ const Background = styled.div`
   height: 100%;
   z-index: -3;
   overflow: hidden;
-`;
-
+`
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -18,7 +17,7 @@ const HeaderContainer = styled.div`
   background: black;
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-`;
+`
 
 const MainContent = styled.div`
   display: flex;
@@ -27,11 +26,12 @@ const MainContent = styled.div`
   justify-content: center;
   height: 70vh;
   width: 100%;
-  background: ${({ background }) => background || 'linear-gradient(to right, #001133, #003366)'};
+  background: ${({ background }) =>
+    background || 'linear-gradient(to right, #001133, #003366)'};
   position: relative;
   opacity: 0.8;
   overflow: scroll;
-`;
+`
 
 const TextContent = styled.div`
   text-align: center;
@@ -39,37 +39,37 @@ const TextContent = styled.div`
   color: black;
   max-width: 600px;
   z-index: 2;
-`;
+`
 
 const SubTitle = styled.h2`
   color: #800080;
   margin-bottom: 2rem;
   font-size: 2rem;
-`;
+`
 
 const List = styled.ul`
   list-style: none;
   padding: 0;
-  color: #CCC000;
+  color: #ccc000;
   text-align: center;
   margin-top: 1rem;
   font-size: 1rem;
-`;
+`
 
 const ListItem = styled.li`
   margin-bottom: 0.5rem;
   white-space: nowrap;
-`;
+`
 
 const FormSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #CC33CC;
+  background: #cc33cc;
   color: white;
   width: 100%;
   text-align: center;
-`;
+`
 
 const FooterSection = styled.div`
   display: flex;
@@ -82,7 +82,7 @@ const FooterSection = styled.div`
   color: black;
   width: 100%;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-`;
+`
 
 const FooterCard = styled.div`
   display: flex;
@@ -93,9 +93,15 @@ const FooterCard = styled.div`
   background: #990099;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-`;
+`
 
-const Oval = styled.div<{ width?: string; height?: string; top?: string; left?: string, color?: string }>`
+const Oval = styled.div<{
+  width?: string
+  height?: string
+  top?: string
+  left?: string
+  color?: string
+}>`
   position: absolute;
   width: ${({ width }) => width || '200px'};
   height: ${({ height }) => height || '100px'};
@@ -106,20 +112,20 @@ const Oval = styled.div<{ width?: string; height?: string; top?: string; left?: 
   top: ${({ top }) => top || '50%'};
   left: ${({ left }) => left || '50%'};
   transform: translate(-50%, -50%);
-`;
+`
 
-const Title = styled.h1<{ size?: string, color?: string }>`
-  font-size: ${({ size }) => size || '2.5rem' };
+const Title = styled.h1<{ size?: string; color?: string }>`
+  font-size: ${({ size }) => size || '2.5rem'};
   margin: 0.5rem 0;
-  color: ${({ color }) => color || 'white' };
-`;
+  color: ${({ color }) => color || 'white'};
+`
 
 const Subtitle = styled.h2`
   font-size: 1.5rem;
   font-weight: 200;
   margin: 0.5rem 0;
   color: blue;
-`;
+`
 
 const StyledLink = styled(Link)`
   background-color: #00cc99;
@@ -135,13 +141,13 @@ const StyledLink = styled(Link)`
   &:hover {
     background-color: #009977;
   }
-`;
+`
 
 const SvgIcon = styled.svg`
   width: 80px;
   height: 80px;
   margin-bottom: 1rem;
-`;
+`
 
 export default function TopPageFv() {
   return (
@@ -152,18 +158,36 @@ export default function TopPageFv() {
 
       <MainContent>
         <Background>
-          <Oval width="300px" height="150px" top="40%" left="30%" color="blue"/>
-          <Oval width="400px" height="200px" top="50%" left="50%" color="white"/>
-          <Oval width="200px" height="100px" top="65%" left="70%" color="red"/>
+          <Oval
+            width="300px"
+            height="150px"
+            top="40%"
+            left="30%"
+            color="blue"
+          />
+          <Oval
+            width="400px"
+            height="200px"
+            top="50%"
+            left="50%"
+            color="white"
+          />
+          <Oval width="200px" height="100px" top="65%" left="70%" color="red" />
         </Background>
         <TextContent>
           <SubTitle>自分と似ている文豪は誰か</SubTitle>
           <List>
-            <ListItem>「誰か僕の眠つてゐるうちにそつと絞め殺してくれるものはないか？」</ListItem>
+            <ListItem>
+              「誰か僕の眠つてゐるうちにそつと絞め殺してくれるものはないか？」
+            </ListItem>
             <ListItem>- 芥川龍之介 歯車</ListItem>
-            <ListItem>「男は死んでも物すごくにやりにやりと笑い続けていた。その笑い声が木村木村と聞こえた」</ListItem>
+            <ListItem>
+              「男は死んでも物すごくにやりにやりと笑い続けていた。その笑い声が木村木村と聞こえた」
+            </ListItem>
             <ListItem>- 有島武郎 或る女</ListItem>
-            <ListItem>「智に働けば角が立つ。情に棹させば流される。意地を通とおせば窮屈だ。とかくに人の世は住みにくい。」</ListItem>
+            <ListItem>
+              「智に働けば角が立つ。情に棹させば流される。意地を通とおせば窮屈だ。とかくに人の世は住みにくい。」
+            </ListItem>
             <ListItem>- 夏目漱石 草枕</ListItem>
           </List>
         </TextContent>
@@ -177,7 +201,16 @@ export default function TopPageFv() {
         <FooterCard>
           <SvgIcon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10" fill="#00cc99" />
-            <text x="12" y="16" fill="white" font-size="10" text-anchor="middle" alignment-baseline="middle">GF</text>
+            <text
+              x="12"
+              y="16"
+              fill="white"
+              font-size="10"
+              text-anchor="middle"
+              alignment-baseline="middle"
+            >
+              GF
+            </text>
           </SvgIcon>
           <Subtitle>性格診断として</Subtitle>
           <p>文豪性格診断で性格を知る</p>
@@ -200,5 +233,5 @@ export default function TopPageFv() {
         </FooterCard>
       </FooterSection>
     </>
-  );
+  )
 }

@@ -1,6 +1,6 @@
 'use client'
-import styled from 'styled-components';
-import Link from 'next/link';
+import styled from 'styled-components'
+import Link from 'next/link'
 import Header from './components/Header'
 import TopPageFv from './components/TopPageFv.tsx'
 import TopPageSection from './components/TopPageSection.tsx'
@@ -17,5 +17,5 @@ export default function Home() {
       <Divider />
       <TopPageBottom />
     </>
-  );
+  )
 }
