@@ -1,5 +1,6 @@
 'use client'
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import StyledComponentsRegistry from './lib/registry'
 import type { ReactNode } from 'react';
 
 const GlobalStyle = createGlobalStyle`
@@ -21,11 +22,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html>
       <body>
-        <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          {children}
-        </ThemeProvider>
-+     </body>
+        <StyledComponentsRegistry>
+          <GlobalStyle />
+          <ThemeProvider theme={theme}>
+            {children}
+          </ThemeProvider>
+        </StyledComponentsRegistry>
+      </body>
     </html>
   );
 }
