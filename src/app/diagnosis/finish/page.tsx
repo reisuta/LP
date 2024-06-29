@@ -18,10 +18,28 @@ const PageContainer = styled.div`
 const result = ['太宰治タイプ', '芥川龍之介タイプ'];
 
 export default function DiagnosisFinish() {
+  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    const fetchEvaluations = async () => {
+      try {
+        // TODO: idを動的に設定する
+        const response = await fetch('http://localhost:8086/evaluation/1');
+        const data = await response.json();
+        setScore(data.score)
+
+      } catch (error) {
+        console.error('Error fetching evaluations:', error);
+      }
+    }
+
+    fetchEvaluations();
+  }, []);
+
   return (
     <>
       <Header />
-      <DiagnosisResult result={result} />
+      <DiagnosisResult result={score} />
     </>
   );
 }

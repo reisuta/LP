@@ -129,9 +129,9 @@ export default function DiagnosisResult({result}) {
           <Oval width="200px" height="100px" top="65%" left="70%" color="red"/>
         </Background>
         <TextContent>
-          <SubTitle>診断結果</SubTitle>
+          <Title>診断結果</Title>
+          <SubTitle>{result}点</SubTitle>
           <List>
-            <ListItem>{result[0]}</ListItem>
             <ListItem>「誰か僕の眠つてゐるうちにそつと絞め殺してくれるものはないか？」</ListItem>
             <ListItem>- 芥川龍之介 歯車</ListItem>
           </List>

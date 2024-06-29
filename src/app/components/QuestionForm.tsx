@@ -103,36 +103,29 @@ export default function QuestionForm({ headers }) {
   const handleSubmit = async () => {
     if (validateCurrentSection()) {
       try {
-        for (const key in answers) {
-          const answer = answers[key];
-          const response = await fetch('http://localhost:8086/diagnosis_answer', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              title: answer.title,
-              point: answer.point,
-              question_id: answer.question_id
-            }),
-          });
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const responseData = await response.json();
-          console.log('Successfully submitted:', responseData);
+        const response = await fetch('http://localhost:8086/diagnosis_answer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(Object.values(answers)),
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-        router.push('/diagnosis/finish')
+        const responseData = await response.json();
+        console.log('Successfully submitted:', responseData);
+        router.push('/diagnosis/finish');
       } catch (error) {
         console.error('Error submitting answers:', error);
       }
     }
   };
 
-  const handleChange = (questionId, choicePoint, choiceTitle, choiceId) => {
+  const handleChange = (questionId, questionWeighting, choicePoint, choiceTitle, choiceId) => {
     setAnswers(prevAnswers => ({
       ...prevAnswers,
-      [questionId]: { point: choicePoint, question_id: questionId, title: choiceTitle, choice_id: choiceId }
+      [questionId]: { point: choicePoint, weighting: questionWeighting, question_id: questionId, title: choiceTitle, choice_id: choiceId }
     }));
   };
 
@@ -172,7 +165,7 @@ export default function QuestionForm({ headers }) {
                     name={`question-${question.id}`}
                     value={choice.point}
                     checked={answers[question.id]?.choice_id === choice.id}
-                    onChange={() => handleChange(question.id, choice.point, choice.title, choice.id)}
+                    onChange={() => handleChange(question.id, question.weighting, choice.point, choice.title, choice.id)}
                   />
                   <Content>{choice.title}</Content>
                 </OptionItem>
