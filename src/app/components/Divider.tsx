@@ -1,5 +1,5 @@
 'use client'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const DividerContainer = styled.div`
   width: 100%;
@@ -8,7 +8,7 @@ const DividerContainer = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
   background: black;
-`;
+`
 
 const Line = styled.div`
   width: 100%;
@@ -17,7 +17,7 @@ const Line = styled.div`
   position: absolute;
   opacity: 0.5;
   top: ${({ top }) => top};
-`;
+`
 
 const Triangle = styled.div`
   width: 0;
@@ -29,7 +29,7 @@ const Triangle = styled.div`
   top: 24px;
   opacity: 0.6;
   left: calc(50% - 100px);
-`;
+`
 
 const Square = styled.div`
   width: 20px;
@@ -39,7 +39,7 @@ const Square = styled.div`
   opacity: 0.6;
   top: 12px;
   left: calc(50% + 100px);
-`;
+`
 
 export default function Divider() {
   return (
@@ -50,5 +50,5 @@ export default function Divider() {
       <Triangle />
       <Square />
     </DividerContainer>
-  );
+  )
 }
